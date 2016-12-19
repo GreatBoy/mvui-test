@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" id="viewport" content="width=320,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+    <title>Mvui Demo</title>
+    <style>
+    * {
+        padding: 0px;
+        margin: 0px;
+        -webkit-tap-highlight-color: rgba(0,0,0,0);
+        outline: 0;
+    }
+    li,
+    a {
+        list-style: none;
+        text-decoration: none;
+        color: inherit;
+    }
+    body {
+        padding: 0px;
+        box-sizing: border-box;
+        -webkit-font-smoothing: antialiased;
+    }
+    .ui-tab {
+        height: 10px;
+    }
+    </style>
+    <link rel="stylesheet" type="text/css" href="../static/index.css"/>
+    <script>
+    (function(win) {
+        var doc = win.document,
+            html = doc.documentElement,
+            scale = 16,
+            resizeEvent = 'orientationchange' in window ? 'orientationchange' : 'resize';
+        function calculate(){
+            windowWidth = html && html.clientWidth || win.innerWidth;
+            windowHeight = html && html.clientHeight || win.innerHeight;
+            deviceAgent = navigator.userAgent.toLowerCase();
+            scale = parseFloat(windowWidth / 3.2);
+            // 修复微信2.3系统bug
+            if (deviceAgent.match(/android\s*2.3/) && deviceAgent.match(/micromessenger/)) {
+                scale = 16;
+            }
+            if( scale > 150 ){
+                scale = 150;
+            }
+            html.style.fontSize = scale + 'px';
+        }
+        html.style.opacity = 0;   // 未渲染出来先把页面隐藏 
+        win.addEventListener(resizeEvent, function() {
+            calculate();
+        }, false);
+        doc.addEventListener('DOMContentLoaded', function() {
+            calculate();
+            body = doc.body;
+            body.style.width = '3.2rem';
+            body.style.fontSize = '0.13rem';
+            body.style.margin = '0px auto';
+            html.style.opacity = 1;
+        }, false);
+    })(window);
+    </script>
+</head>
+<body>
+    <div id="app"></div>
+    <script src="../static/fastclick.js"></script>
+    <script>
+        window.addEventListener('load', function() {
+          FastClick.attach(document.body);
+        }, false);
+    </script>
+<script type="text/javascript" src="./common.js"></script><script type="text/javascript" src="./build.bundle.js"></script></body>
+</html>
